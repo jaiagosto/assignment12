@@ -51,11 +51,12 @@ jobs:
       - name: Run tests
         env:
           DATABASE_URL: postgresql://user:password@localhost:5432/mytestdb
+          PYTHONPATH: .
         run: |
           source venv/bin/activate
-          pytest tests/unit/ --cov=app --junitxml=test-results/junit.xml
-          pytest tests/integration/
-          pytest tests/e2e/
+          
+          # Run unit tests only (we don't have integration/e2e tests yet)
+          pytest tests/unit/ --cov=app --junitxml=test-results/junit.xml -v
 
   security:
     needs: test
